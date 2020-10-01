@@ -22,15 +22,15 @@ def scores2ranks(v):
 class RenewalRanking:
     def __init__(self, competitors, allow_raise=True, float_precision=None):
         """
-            This class is a wrapper over [TrueSkill](https://trueskill.org/) which is a lib for making a ranking of competitors (i.e; an Elo-like rating system used in echecs federations).
+        This class is a wrapper over [TrueSkill](https://trueskill.org/) which is a lib for making a ranking of competitors (i.e; an Elo-like rating system used in echecs federations).
+    
+        `competitors` is either an integer (number on competitors) or a list of hashable ids (e.g. strings, integers)
         
-            `competitors` is either an integer (number on competitors) or a list of hashable ids (e.g. strings, integers)
-            
-            "Ranks" are ranks of each contender in a vector. It means it's a vector having a size equa to the number of competitors. Each coordinate correspond to the id of the contender, and values in the vector are ranks.
-            For example, [2, 3, 2, 1] means the first and the third competitors are ranked second, the last one is ranked fist (the winner).
-            This vector can be generated using `get_ranks`.
-            "Ranking" corresponds to an ordered vector having all competitors. The first is the winner, the last is the looser.
-            This vector can be generated using `get_ranking`.
+        "Ranks" are ranks of each contender in a vector. It means it's a vector having a size equa to the number of competitors. Each coordinate correspond to the id of the contender, and values in the vector are ranks.
+        For example, [2, 3, 2, 1] means the first and the third competitors are ranked second, the last one is ranked fist (the winner).
+        This vector can be generated using `get_ranks`.
+        "Ranking" corresponds to an ordered vector having all competitors. The first is the winner, the last is the looser.
+        This vector can be generated using `get_ranking`.
         """
         self.allow_raise = allow_raise
         self.float_precision = float_precision
