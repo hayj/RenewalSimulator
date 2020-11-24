@@ -163,11 +163,17 @@ def renewal_assignments(users, recsyss):
         recsys2 = recsyss_shuffle_aggr.pop()
         while recsys1 == recsys2:
             recsys2 = recsyss_shuffle_aggr.pop()
+            if len(recsyss_shuffle_aggr) < len(recsyss) * 2:
+                recsyss_shuffle_aggr += shuffle(recsyss)
         assignments[user] = {recsys1, recsys2}
         if len(recsyss_shuffle_aggr) < len(recsyss) * 2:
             recsyss_shuffle_aggr += shuffle(recsyss)
     return assignments
 
+
+def renassignTest():
+    for i in range(10000):
+        renewal_assignments(list(range(50)), list(range(3)))
 
 def rr_test1():
     print('####### test 1 #######')
@@ -195,5 +201,6 @@ def rr_test2():
 
 
 if __name__ == '__main__':
-    rr_test1()
-    rr_test2()
+    # rr_test1()
+    # rr_test2()
+    renassignTest()
