@@ -27,6 +27,10 @@ def interleave(recs_a, recs_b, method="teamdraft"):
 	if method == "teamdraft":
 		method = interleaving.TeamDraft([recs_a, recs_b])
 		ranking = method.interleave()
+		print("aaaaaa")
+		print(type(ranking))
+		print(ranking)
+		print("bbbb")
 		return (list(ranking), pickle.dumps(ranking))
 	else:
 		raise Exception("Unknown method")
@@ -67,18 +71,18 @@ def evaluate(ser_ranking, clicked_news):
 def test1():
 	# Doing the interleave:
 	a = list(range(1, 31))
+	a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
 	b = [9, 10, 11, 12, 13, 14, 15, 1, 2, 3, 4, 5, 6, 7, 8, 100, 101]
 	sd = getSD()
 	ranking, ser_ranking = interleave(a, b) # You need to send ranking to the user and store both
 	print(ranking)
 	sd["a"] = ser_ranking
-	time.sleep(1)
 	
 	# Evaluation:
 	print("When we'll have feedbacks on this bucket...")
 	sd = None
-	clicked_news = [1, 9, 12, 3] # draw
-	# clicked_news = [12, 9, 100, 101, 10] # B wins
+	# clicked_news = [1, 9, 12, 3] # draw
+	clicked_news = [12, 9, 100, 101, 10] # B wins
 	# clicked_news = [3, 1, 2, 4, 8, 5] # A wins
 	sd = getSD()
 	ser_ranking = sd["a"]
