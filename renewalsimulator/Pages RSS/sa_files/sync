@@ -1,0 +1,73 @@
+(function(){function insert_pixel(url, attemptID){
+		var check = function() {
+			if (document.body) {
+				var img = document.createElement("img");
+				img.setAttribute("style", "position:absolute;opacity:0;width:1px;height:1px;display:block;");
+				img.src = url;
+				img.setAttribute("class", "ayl_sync_pixel ayl-injected-element");
+				img.addEventListener("load", function(){
+					const element = getElement(attemptID);
+					element.removeChild(img);
+				});
+
+				const element = getElement(attemptID);
+				element.appendChild(img);
+
+			} else {
+				setTimeout(check, 200);
+			}
+		}
+		var getElement = function(attemptID) {
+			if(attemptID) {
+				const element = document.getElementById('ayl_' + attemptID);
+				if (element) {
+					return element;
+				}
+				const elementAuto = document.getElementById('ayl_i_' + attemptID);
+				if(elementAuto) {
+					return elementAuto;
+				}
+			}
+			return document.body;
+		}
+		check();
+	}
+	function insert_iframe(url, attemptID){
+		var check = function() {
+			if (document.body) {
+				var ifr = document.createElement("iframe");
+
+				ifr.setAttribute("id", "ayl-sync-" + attemptID);
+				ifr.setAttribute("style", "border: 0px; display: none;");
+				ifr.setAttribute("height", "0");
+				ifr.setAttribute("width", "0");
+				ifr.setAttribute("marginwidth", "0");
+				ifr.setAttribute("marginheight", "0");
+				ifr.setAttribute("scrolling", "no");
+				ifr.setAttribute("frameborder", "0");
+
+				ifr.src = url;
+
+				const element = getElement(attemptID);
+				element.appendChild(ifr);
+
+			} else {
+				setTimeout(check, 200);
+			}
+		}
+		var getElement = function(attemptID) {
+			if(attemptID) {
+				const element = document.getElementById('ayl_' + attemptID);
+				if (element) {
+					return element;
+				}
+				const elementAuto = document.getElementById('ayl_i_' + attemptID);
+				if(elementAuto) {
+					return elementAuto;
+				}
+			}
+			return document.body;
+		}
+		check();
+	}
+	insert_pixel("https://match.adsrvr.org/track/cmf/generic?ttd_pid=k2j3gqp&ttd_tpi=1", "b3e06fcbed4e231bf5bc177f434545c2");insert_pixel("https://s.seedtag.com/cs/cookiesync/adyoulike?channeluid=f47d95c83512edc553b44a4b96e0d894", "b3e06fcbed4e231bf5bc177f434545c2");insert_pixel("https://contextual.media.net/cksync.php?cs=3&type=ayl&ovsid=f47d95c83512edc553b44a4b96e0d894", "b3e06fcbed4e231bf5bc177f434545c2");insert_pixel("https://matching.ivitrack.com/sync?realm=ayl&uid=f47d95c83512edc553b44a4b96e0d894", "b3e06fcbed4e231bf5bc177f434545c2");})()

@@ -1,0 +1,2 @@
+var d = {"form_factor":"PERSONAL_COMPUTER","os_family":"LINUX","browser_family":"CHROME","browser_version":"92.0.4515.159","brand":null,"model":null,"os_version":"Linux","carrier":null,"raw_value":null,"agent_type":"WEB_BROWSER"}
+if(window.mics && window.mics._setDeviceInfo){mics._setDeviceInfo(d);}

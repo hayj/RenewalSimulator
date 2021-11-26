@@ -1,0 +1,61 @@
+/*! Copyright (c) 2020 Mediarithmics; All Rights Reserved */ 
+    !function(t,e,a){"use strict";var i=t.scimhtiraidem||{};function s(t){var e=i[a]||{};i[a]=e,e[t]||(e[t]=function(){i._queue[a].push({method:t,args:Array.prototype.slice.apply(arguments)})})}t.googletag=t.googletag||{},t.googletag.cmd=t.googletag.cmd||[],t.googletag.cmd.push(function(){var e=t.localStorage.getItem("mics_sgmts"),a=JSON.parse(e),i=a||{};Object.keys(i).forEach(function(e){t.googletag.pubads().setTargeting("mics_"+e,i[e].map(String))})});var r="init call config push pushDefault addProperties addProperty onFinish onStart _reset".split(" ");i._queue=i._queue||{},i._names=i._names||[],i._names.push(a),i._queue[a]=i._queue[a]||[],i._startTime=(new Date).getTime(),i._snippetVersion="2.0";for(var o=0;o<r.length;o++)s(r[o]);t.scimhtiraidem=i,t[a]=i[a];var n=e.createElement("script");n.setAttribute("type","text/javascript"),n.setAttribute("src","https://static.mediarithmics.com/tag/2/tag.min.js"),n.setAttribute("async","true"),e.getElementsByTagName("script")[0].parentNode.appendChild(n)}(window,document,"webediaMics");
+    
+    webediaMics.init("jeu-2020"); // jeuxvideo
+    webediaMics.call("syncFeeds");
+
+    var gen_data = {
+        global_container : function (str) {
+            var j = 0;
+            if (Object.keys(dataLayer).length > 0) {
+                dataLayer.forEach((item, index) => {
+                    if (item[str]) j = index;
+                });
+            }
+            return (dataLayer[j][str]) ? dataLayer[j][str] : null;
+        },
+        stringToObject: function (element) {
+            if (typeof element == "string") return [element];
+            return element;
+        },
+        extract_gaming : function () {
+            var gaming = {};
+            var jv = {};
+            if (this.global_container("content_type")) {
+                jv["content_type"] = this.global_container("content_type");
+                gaming["jv"] = jv;
+            }
+            if (this.global_container("game_name") && Object.keys(this.global_container("game_name")).length > 0) gaming["game_name"] = this.stringToObject(this.global_container("game_name"));
+            if (this.global_container("platform") && Object.keys(this.global_container("platform")).length > 0) gaming["platform"] = this.stringToObject(this.global_container("platform"));
+            if (this.global_container("game_publisher") && Object.keys(this.global_container("game_publisher")).length > 0) gaming["game_publisher"] = this.stringToObject(this.global_container("game_publisher"));
+            if (this.global_container("game_genre") && Object.keys(this.global_container("game_genre")).length > 0) gaming["game_genre"] = this.stringToObject(this.global_container("game_genre"));
+            if (this.global_container("tags") && (Object.keys(this.global_container("tags")).length > 0)) gaming["tags"] = this.stringToObject(this.global_container("tags"));
+            var webtv = this.extract_webtv();
+            if (Object.keys(webtv).length > 0) gaming["webtv"] = webtv;
+            return gaming;
+        },
+        extract_webtv : function () {
+            var webtv = {};
+            if (this.global_container("tv_channel")) webtv["tv_channel"] = this.global_container("tv_channel");
+            if (this.global_container("tv_program")) webtv["tv_program"] = this.global_container("tv_program");
+            return webtv;
+        },
+        extract_data : function () {
+            var data = {};
+            data["pageTitle"] = document.title;
+            data["urlPath"] = window.location.pathname;
+            if (this.global_container("rubric")) data["section"] = this.global_container("rubric");
+            visitor_country = this.global_container("visitor_country");
+            if (typeof visitor_country == "string") data["visitor_country"] = visitor_country;
+            data["vertical"] = "gaming";
+            data["channel_token"] = "jeu-2020";
+            var gaming = this.extract_gaming();
+            if (Object.keys(gaming).length > 0) data["gaming"] = gaming;
+            return data;
+        }
+    };
+
+    var event_type = (gen_data.global_container("page_type")) ? gen_data.global_container("page_type") : 'error_event_datalayer_empty'
+    var event_data = gen_data.extract_data();
+
+    webediaMics.push(event_type, event_data);
